@@ -276,6 +276,25 @@ def flush_cache(edges, filename, comment_size):
             f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
 
 
+def add_archive():
+    """
+    Several repositories I have contributed to have since been deleted.
+    This function adds them using their last known data
+    """
+    with open('cache/repository_archive.txt', 'r') as f:
+        data = f.readlines()
+    old_data = data
+    data = data[7:len(data)-3] # remove the comment block    
+    added_loc, deleted_loc, added_commits = 0, 0, 0
+    contributed_repos = len(data)
+    for line in data:
+        repo_hash, total_commits, my_commits, *loc = line.split()
+        added_loc += int(loc[0])
+        deleted_loc += int(loc[1])
+        if (my_commits.isdigit()): added_commits += int(my_commits)
+    added_commits += int(old_data[-1].split()[4][:-1])
+    return [added_loc, deleted_loc, added_loc - deleted_loc, added_commits, contributed_repos]
+
 def force_close_file(data, cache_comment):
     """
     Forces the file to close, preserving whatever data was written to it
@@ -295,45 +314,6 @@ def stars_counter(data):
     total_stars = 0
     for node in data: total_stars += node['node']['stargazers']['totalCount']
     return total_stars
-
-
-def markdown_overwrite(age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data):
-    """
-    Generates a markdown string with all the stats in htop style.
-    """
-    loc_add_val = int(loc_data[0].replace(",", ""))
-    loc_del_val = int(loc_data[1].replace(",", ""))
-    total_loc_change = loc_add_val + loc_del_val
-    
-    if total_loc_change > 0:
-        add_perc = loc_add_val / total_loc_change
-    else:
-        add_perc = 0
-        
-    bar_width = 20
-    add_bar = "█" * int(add_perc * bar_width)
-    del_bar = "░" * (bar_width - len(add_bar))
-
-    htop_md = f'''```text
-htop 2.0 - (c) 2004-2021 Hisham Muhammad, {USER_NAME}
-Released under the GNU GPL. See 'man' page for more info.
-
-LoC [Add/Del]:  [{add_bar}{del_bar}] {add_perc*100:.1f}%/{(1-add_perc)*100:.1f}%
-
-       KEY              VALUE
-────────────────────────────────────────
-       Age              {age_data}
-       Commits (1y)     {commit_data}
-       Stars            {star_data}
-       Followers        {follower_data}
-       Repositories     {repo_data}
-       Contributed To   {contrib_data}
-       Lines of Code    {loc_data[2]} (+{loc_data[0]}, -{loc_data[1]})
-
-F1 Help  F2 Setup  F3 Search F4 Filter F5 Tree F10 Quit
-```'''
-    with open('README.md', 'w') as f:
-        f.write(htop_md)
 
 
 def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data):
@@ -477,6 +457,13 @@ if __name__ == '__main__':
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
 
+    # several repositories that I've contributed to have since been deleted.
+    if OWNER_ID == {'id': 'MDQ6VXNlcjU3MzMxMTM0'}: # only calculate for user Andrew6rant
+        archived_data = add_archive()
+        for index in range(len(total_loc)-1):
+            total_loc[index] += archived_data[index]
+        contrib_data += archived_data[-1]
+        commit_data += int(archived_data[-2])
 
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
 
