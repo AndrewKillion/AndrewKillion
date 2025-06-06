@@ -4,7 +4,5 @@
     <img alt="Andrew Killion's GitHub Profile README" src="https://raw.githubusercontent.com//AndrewKillion/AndrewKillion/main/light_mode.svg">
   </picture>
 </a>
-<div>
-<br>
-<text>Inspiration: <a href= "https://github.com/Andrew6rant">Andrew6rant</text>
+<a href= "https://github.com/Andrew6rant">Inspo</a>
 </div>
