@@ -10,9 +10,9 @@ import hashlib
 # Account permissions: read:Followers, read:Starring, read:Watching
 # Repository permissions: read:Commit statuses, read:Contents, read:Issues, read:Metadata, read:Pull Requests
 # Issues and pull requests permissions not needed at the moment, but may be used in the future
-# HEADERS = {'authorization': 'token '+ os.environ['ACCESS_TOKEN']}
-# USER_NAME = os.environ['USER_NAME'] 
-# QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
+HEADERS = {'authorization': 'token '+ os.environ['ACCESS_TOKEN']}
+USER_NAME = os.environ['USER_NAME'] 
+QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
 
 
 def daily_readme(birthday):
