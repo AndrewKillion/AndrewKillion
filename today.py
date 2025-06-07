@@ -10,9 +10,9 @@ import hashlib
 # Account permissions: read:Followers, read:Starring, read:Watching
 # Repository permissions: read:Commit statuses, read:Contents, read:Issues, read:Metadata, read:Pull Requests
 # Issues and pull requests permissions not needed at the moment, but may be used in the future
-HEADERS = {'authorization': 'token '+ os.environ['ACCESS_TOKEN']}
-USER_NAME = os.environ['USER_NAME'] # 'Andrew6rant'
-QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
+# HEADERS = {'authorization': 'token '+ os.environ['ACCESS_TOKEN']}
+# USER_NAME = os.environ['USER_NAME'] 
+# QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
 
 
 def daily_readme(birthday):
@@ -38,6 +38,7 @@ def format_plural(unit):
     >>> '1 day'
     """
     return 's' if unit != 1 else ''
+
 
 
 def simple_request(func_name, query, variables):
@@ -448,10 +449,11 @@ if __name__ == '__main__':
     OWNER_ID, acc_date = user_data
     formatter('account data', user_time)
     age_data, age_time = perf_counter(daily_readme, datetime.datetime(1986, 4, 15))
+    print(f'age_data: {age_data}, age_time: {age_time}')
     formatter('age calculation', age_time)
     total_loc, loc_time = perf_counter(loc_query, ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], 7)
     formatter('LOC (cached)', loc_time) if total_loc[-1] else formatter('LOC (no cache)', loc_time)
-    commit_data, commit_time = perf_counter(commit_counter, 7)``
+    commit_data, commit_time = perf_counter(commit_counter, 7)
     star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
