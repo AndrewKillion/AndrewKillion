@@ -326,16 +326,41 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     """
     tree = etree.parse(filename)
     root = tree.getroot()
-    justify_format(root, 'age_data', age_data, 49)
-    justify_format(root, 'commit_data', commit_data, 20)
-    justify_format(root, 'star_data', star_data, 14)
-    justify_format(root, 'repo_data', repo_data, 5)
-    justify_format(root, 'contrib_data', contrib_data)
-    justify_format(root, 'follower_data', follower_data, 10)
-    justify_format(root, 'loc_data', loc_data[2], 11)
-    justify_format(root, 'loc_add', loc_data[0])
-    justify_format(root, 'loc_del', loc_data[1], 7)
+    justify_format(root, 'age_data', age_data, bio_length)
+    justify_format(root, 'commit_data', commit_data, github_1_length)
+    justify_format(root, 'star_data', star_data, github_2_length)
+    justify_format(root, 'repo_data', repo_data, github_1_length)
+    justify_format(root, 'contrib_data', contrib_data, github_1_length)
+    justify_format(root, 'follower_data', follower_data, github_2_length)
+    justify_format(root, 'loc_data', loc_data[2], github_1_length)
+    justify_format(root, 'loc_add', loc_data[0], github_1_length)
+    justify_format(root, 'loc_del', loc_data[1], github_1_length)
     tree.write(filename, encoding='utf-8', xml_declaration=True)
+
+def get_line_character_limit(svg_path, sections):
+    """
+    Total characters used in a line to aid in the justifying the format and setting the amount of dots
+    """
+    lengths = []
+    for section in sections:
+        tree = etree.parse(svg_path)
+        root = tree.getroot()
+        
+        title = root.xpath(f".//*[contains(@class, '{section}_title')]")[0].text
+        dots = root.xpath(f".//*[contains(@class, '{section}_dots')]")[0].text
+        output= root.xpath(f".//*[contains(@class, '{section}_output')]")[0].text
+
+        line_length = len(title) + len(dots) + len(output) + 1 # +1 for the colon
+
+        lengths.append(line_length)
+
+    bio_length = lengths[0]
+    contact_length = lengths[1]
+    github_1_length = lengths[2]
+    github_2_length = lengths[3]
+
+
+    return bio_length, contact_length, github_1_length, github_2_length
 
 
 def justify_format(root, element_id, new_text, length=0):
@@ -451,7 +476,6 @@ if __name__ == '__main__':
     OWNER_ID, acc_date = user_data
     formatter('account data', user_time)
     age_data, age_time = perf_counter(daily_readme, datetime.datetime(1986, 4, 15))
-    print(f'age_data: {age_data}, age_time: {age_time}')
     formatter('age calculation', age_time)
     total_loc, loc_time = perf_counter(loc_query, ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], 7)
     formatter('LOC (cached)', loc_time) if total_loc[-1] else formatter('LOC (no cache)', loc_time)
@@ -460,7 +484,8 @@ if __name__ == '__main__':
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
-
+    sections = ['bio', 'contact', 'github_1', 'github_2']
+    bio_length, contact_length, github_1_length, github_2_length = get_line_character_limit('dark_mode.svg', sections)
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
 
     svg_overwrite('dark_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1])
