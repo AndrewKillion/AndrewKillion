@@ -326,6 +326,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     """
     tree = etree.parse(filename)
     root = tree.getroot()
+    
     justify_format(root, 'age_data', age_data, bio_length)
     justify_format(root, 'commit_data', commit_data, github_1_length)
     justify_format(root, 'star_data', star_data, github_2_length)
@@ -335,6 +336,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     justify_format(root, 'loc_data', loc_data[2], github_1_length)
     justify_format(root, 'loc_add', loc_data[0], github_1_length)
     justify_format(root, 'loc_del', loc_data[1], github_1_length)
+    
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 
 def get_line_character_limit(svg_path, sections):
