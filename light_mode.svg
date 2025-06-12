@@ -58,12 +58,12 @@ text, tspan {white-space: pre;}
 </text>
 <text x="480" y="30" fill="#24292f">
 <tspan x="480" y="30">andrew.killion</tspan> -———————————————————————————————————————————-
-<tspan x="480" y="50" class="cc">. </tspan><tspan class="key">OS</tspan>:<tspan class="cc"> ......................................... </tspan><tspan class="value">macOS, Linux</tspan>
-<tspan x="480" y="70" class="cc">. </tspan><tspan class="key">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> ....................... </tspan><tspan class="value" id="age_data">39 years, 1 month, 24 days</tspan>
-<tspan x="480" y="90" class="cc">. </tspan><tspan class="key">Host</tspan>:<tspan class="cc"> ................................... </tspan><tspan class="value">Underdog Fantasy</tspan>
-<tspan x="480" y="110" class="cc">. </tspan><tspan class="key">Project.Current</tspan>:<tspan class="cc"> ................................. </tspan><a href="https://github.com/AndrewKillion/mma_whr"><tspan class="value">MMA WHR</tspan></a>
-<tspan x="480" y="130" class="cc">. </tspan><tspan class="key">IDE</tspan>:<tspan class="cc"> ......................... </tspan><tspan class="value">Cursor 1.0.0, VSCode 1.96.2</tspan>
-<tspan x="480" y="150" class="cc">. </tspan><tspan class="key">Languages</tspan>.<tspan class="key">Programming</tspan>:<tspan class="cc"> ........... </tspan><tspan class="value">Python, SQL, JavaScript</tspan>
+<tspan x="480" y="50" class="cc">. </tspan><tspan class="key os_title">OS</tspan>:<tspan class="cc"> ......................................... </tspan><tspan class="value">macOS, Linux</tspan>
+<tspan x="480" y="70" class="cc">. </tspan><tspan class="key uptime_title">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> ....................... </tspan><tspan class="value" id="age_data">39 years, 1 month, 24 days</tspan>
+<tspan x="480" y="90" class="cc">. </tspan><tspan class="key host_title">Host</tspan>:<tspan class="cc"> ................................... </tspan><tspan class="value">Underdog Fantasy</tspan>
+<tspan x="480" y="110" class="cc">. </tspan><tspan class="key project_current_title">Project.Current</tspan>:<tspan class="cc"> ................................. </tspan><a href="https://github.com/AndrewKillion/mma_whr"><tspan class="value">MMA WHR</tspan></a>
+<tspan x="480" y="130" class="cc">. </tspan><tspan class="key ide_title">IDE</tspan>:<tspan class="cc"> ......................... </tspan><tspan class="value">Cursor 1.0.0, VSCode 1.96.2</tspan>
+<tspan x="480" y="150" class="cc">. </tspan><tspan class="key languages_programming_title">Languages</tspan>.<tspan class="key">Programming</tspan>:<tspan class="cc"> ........... </tspan><tspan class="value">Python, SQL, JavaScript</tspan>
 <tspan x="480" y="170" class="cc">. </tspan><tspan class="key">Languages</tspan>.<tspan class="key">Computer</tspan>:<tspan class="cc"> .................... </tspan><tspan class="value">JSON, LaTeX, YAML</tspan>
 <tspan x="480" y="190" class="cc">. </tspan><tspan class="key">Languages</tspan>.<tspan class="key">Real</tspan>:<tspan class="cc"> .................................. </tspan><tspan class="value">English</tspan>
 <tspan x="480" y="210" class="cc">. </tspan><tspan class="key">Hobbies</tspan>.<tspan class="key">Real</tspan>:<tspan class="cc"> ................... </tspan><tspan class="value">Sports Betting, Politics</tspan>
