@@ -60,7 +60,7 @@ text, tspan {white-space: pre;}
 <text x="480" y="30" fill="#24292f">
 <tspan x="480" y="30">andrew.killion</tspan> -———————————————————————————————————<tspan id="last_updated">v06.30.25</tspan>
 <tspan x="480" y="50" class="cc">. </tspan><tspan class="key os_title">OS</tspan>:<tspan class="cc"> ......................................... </tspan><tspan class="value">macOS, Linux</tspan>
-<tspan x="480" y="70" class="cc">. </tspan><tspan class="key uptime_title">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> ...................... </tspan><tspan class="value" id="age_data">39 years, 2 months, 15 days</tspan>
+<tspan x="480" y="70" class="cc">. </tspan><tspan class="key uptime_title">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> . </tspan><tspan class="value" id="age_data">39 years, 2 months, 15 days</tspan>
 <tspan x="480" y="90" class="cc">. </tspan><tspan class="key host_title">Host</tspan>:<tspan class="cc"> ................................ </tspan><tspan class="value">Saikat for Congress</tspan>
 <tspan x="480" y="110" class="cc">. </tspan><tspan class="key project_current_title">Project.Current</tspan>:<tspan class="cc"> ................................. </tspan><a href="https://github.com/AndrewKillion/mma_whr"><tspan class="value">MMA WHR</tspan></a>
 <tspan x="480" y="130" class="cc">. </tspan><tspan class="key ide_title">IDE</tspan>:<tspan class="cc"> ......................... </tspan><tspan class="value">Cursor 1.0.0, VSCode 1.96.2</tspan>
