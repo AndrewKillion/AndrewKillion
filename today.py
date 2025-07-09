@@ -379,18 +379,15 @@ def justify_format(root, element_id, new_text, length=0):
     if isinstance(new_text, int):
         new_text = f"{'{:,}'.format(new_text)}"
     new_text = str(new_text)
-    find_and_replace(root, element_id, new_text)
+    find_and_replace(root, f"{element_id}_output", new_text)
     title_length = get_title_length(element_id)
     data_length = get_data_length(element_id)
     just_len = max(0, length - data_length - title_length) - 2 # -2 for the spaces on the end of the dot string
-    print("--------------------------------")
-    print("Element ID:",element_id)
-    print("Title length:",title_length)
-    print("New text length:",data_length)
-    print("Justification length:",just_len)
-    print("Total length:",length)
-    print("Length difference:",length - just_len)
-    if just_len <= 2:
+    
+    # Handle negative or very small justification lengths gracefully
+    if just_len < 0:
+        dot_string = ' '
+    elif just_len <= 2:
         dot_map = {0: '  ', 1: ' . ', 2: ' .. '}
         dot_string = dot_map[just_len]
     else:
@@ -405,30 +402,41 @@ def find_and_replace(root, element_id, new_text):
     element = root.find(f".//*[@id='{element_id}']")
     if element is not None:
         element.text = new_text
+    else:
+        # Try alternative ID format (for light_mode.svg compatibility)
+        alt_element_id = element_id.replace('_output', '') if '_output' in element_id else f"{element_id}_output"
+        alt_element = root.find(f".//*[@id='{alt_element_id}']")
+        if alt_element is not None:
+            alt_element.text = new_text
 
 def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, bio_length, github_1_length, github_2_length):
     """
     Parse SVG files and update elements with my age, commits, stars, repositories, and lines written
     """
-    tree = etree.parse(filename)
-    root = tree.getroot()
-    
-    today = datetime.datetime.today()
-    date_str = f"v{today.strftime('%m.%d.%y')}"
-    find_and_replace(root, 'last_updated', date_str)
-    
-    # Update all data values in the SVG before justifying
-    # Justify the lines based on the new data
-    justify_format(root, 'age_data', age_data, bio_length)
-    justify_format(root, 'repo_data', repo_data, github_1_length)
-    justify_format(root, 'commit_data', commit_data, github_1_length)
-    justify_format(root, 'line_data', loc_data[2], github_1_length)
+    try:
+        tree = etree.parse(filename)
+        root = tree.getroot()
+        
+        today = datetime.datetime.today()
+        date_str = f"v{today.strftime('%m.%d.%y')}"
+        find_and_replace(root, 'last_updated', date_str)
+        
+        # Update all data values in the SVG before justifying
+        # Justify the lines based on the new data
+        justify_format(root, 'age_data', age_data, bio_length)
+        justify_format(root, 'repo_data', repo_data, github_1_length)
+        justify_format(root, 'commit_data', commit_data, github_1_length)
+        justify_format(root, 'line_data', loc_data[2], github_1_length)
 
-    justify_format(root, 'star_data', star_data, github_2_length)
-    justify_format(root, 'follower_data', follower_data, github_2_length)
-    justify_format(root, 'plus_minus_data', f"{loc_data[0]}/{loc_data[1]}", github_2_length)
-    
-    tree.write(filename, encoding='utf-8', xml_declaration=True)
+        justify_format(root, 'star_data', star_data, github_2_length)
+        justify_format(root, 'follower_data', follower_data, github_2_length)
+        justify_format(root, 'plus_minus_data', f"{loc_data[0]}/{loc_data[1]}", github_2_length)
+        
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+            
+    except Exception as e:
+        print(f"ERROR: Failed to update {filename}: {e}")
+        raise
 
 def commit_counter(comment_size):
     """
