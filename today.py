@@ -401,13 +401,51 @@ def find_and_replace(root, element_id, new_text):
     """
     element = root.find(f".//*[@id='{element_id}']")
     if element is not None:
-        element.text = new_text
+        # Handle special cases with nested elements
+        if element_id == 'repo_data_output':
+            # Clear the parent element's direct text and update the first nested tspan
+            element.text = None
+            first_tspan = element.find('.//tspan[@class="value"]')
+            if first_tspan is not None:
+                first_tspan.text = f"{new_text} "
+        elif element_id == 'plus_minus_data_output':
+            # Clear the parent element's direct text and update nested elements
+            element.text = None
+            # Parse the format "additions/deletions" and update nested elements
+            if '/' in str(new_text):
+                additions, deletions = str(new_text).split('/')
+                # Update loc_add element
+                loc_add = element.find('.//*[@id="loc_add"]')
+                if loc_add is not None:
+                    loc_add.text = f"{int(additions):,}"
+                # Update loc_del element  
+                loc_del = element.find('.//*[@id="loc_del"]')
+                if loc_del is not None:
+                    loc_del.text = f"{int(deletions):,}"
+        else:
+            # Default behavior for simple elements
+            element.text = new_text
     else:
         # Try alternative ID format (for light_mode.svg compatibility)
         alt_element_id = element_id.replace('_output', '') if '_output' in element_id else f"{element_id}_output"
         alt_element = root.find(f".//*[@id='{alt_element_id}']")
         if alt_element is not None:
-            alt_element.text = new_text
+            # Handle special cases for alternative element ID
+            if alt_element_id == 'repo_data':
+                # For light_mode.svg, this might be a simpler structure
+                alt_element.text = new_text
+            elif alt_element_id == 'plus_minus_data':
+                # Handle plus_minus_data for light_mode.svg
+                if '/' in str(new_text):
+                    additions, deletions = str(new_text).split('/')
+                    loc_add = alt_element.find('.//*[@id="loc_add"]')
+                    if loc_add is not None:
+                        loc_add.text = f"{int(additions):,}"
+                    loc_del = alt_element.find('.//*[@id="loc_del"]')
+                    if loc_del is not None:
+                        loc_del.text = f"{int(deletions):,}"
+            else:
+                alt_element.text = new_text
 
 def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, bio_length, github_1_length, github_2_length):
     """
