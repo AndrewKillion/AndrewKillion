@@ -61,7 +61,7 @@ text, tspan {white-space: pre;}
 <tspan x="480" y="30">andrew.killion</tspan> -———————————————————————————————————<tspan id="last_updated">v01.01.26</tspan>
 <tspan x="480" y="50" class="cc">. </tspan><tspan class="key bos_title">OS</tspan>:<tspan class="cc bio_dots"> ......................................... </tspan><tspan class="value bio_output">macOS, Linux</tspan>
 <tspan x="480" y="70" class="cc">. </tspan><tspan class="key age_title" id="age_data_title">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> ...................... </tspan><tspan class="value" id="age_data_output">39 years, 8 months, 17 days</tspan>
-<tspan x="480" y="90" class="cc">. </tspan><tspan class="key host_title">Host</tspan>:<tspan class="cc"> ................................ </tspan><tspan class="value">Saikat for Congress</tspan>
+<tspan x="480" y="90" class="cc">. </tspan><tspan class="key host_title">Host</tspan>:<tspan class="cc"> ................................ </tspan><tspan class="value">The Washington Post</tspan>
 <tspan x="480" y="110" class="cc">. </tspan><tspan class="key project_current_title">Project.Current</tspan>:<tspan class="cc"> ................................. </tspan><a href="https://github.com/AndrewKillion/mma_whr"><tspan class="value">MMA WHR</tspan></a>
 <tspan x="480" y="130" class="cc">. </tspan><tspan class="key ide_title">IDE</tspan>:<tspan class="cc"> ......................... </tspan><tspan class="value">Cursor 1.0.0, VSCode 1.96.2</tspan>
 <tspan x="480" y="150" class="cc">. </tspan><tspan class="key languages_programming_title">Languages.Programming</tspan>:<tspan class="cc"> ........... </tspan><tspan class="value">Python, SQL, JavaScript</tspan>
